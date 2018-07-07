@@ -4,7 +4,7 @@ namespace PontoNucleoVendas.Domain.Entities
 {
     public class Customer : Entity
     {
-        public Customer(string id, 
+        public Customer(int id,
                         string cnpj,
                         string name,
                         string businessArea) : 

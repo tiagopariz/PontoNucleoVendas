@@ -12,11 +12,17 @@ namespace PontoNucleoVendas.Domain.Entities
                     int salesmanId) : 
             base(id)
         {
-            SalesmanId = salesmanId;
+            SalesmanId = salesmanId;            
+            _items = new List<Item>();
         }
 
         public int SalesmanId { get; }
 
         public IReadOnlyCollection<Item> Items => _items.ToArray();
+
+        public void AddItem(Item item)
+        {
+            _items.Add(item);
+        }
     }
 }
