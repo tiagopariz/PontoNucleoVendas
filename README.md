@@ -7,7 +7,7 @@ Sistema de Vendas em C# e .NET Core
 Set-Location .\NomePasta\ - Equivalente o cd
 Get-ChildItem - Equivalente ao dir
 New-Item NomePasta -ItemType Directory - Equivalente ao MkDir
-Remove-Item NomeArquivo - Equivalente o Del
+Remove-Item NomeArquivoOuPasta - Equivalente ao Del
 
 ## Comandos do GitBash Uteis
 
@@ -22,3 +22,4 @@ dotnet sln add .\CaminhoDoProjeto\NomeProjeto.csproj - adiciona projeto na solu√
 dotnet build - compila o projeto
 dotnet test .\CaminhoDoProjeto\NomeProjeto.csproj - testa o projeto
 dotnet add reference .\CaminhoDoProjeto\NomeProjeto.csproj - adiciona referencia ao projeto do diretorio atual
+dotnet run --project .\CaminhoDoProjeto\NomeProjeto.csproj - executa o projeto
