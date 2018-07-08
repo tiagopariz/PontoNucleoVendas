@@ -11,7 +11,7 @@ namespace PontoNucleoVendas.Prompt
         {
             while (true)
             { 
-                Console.WriteLine("\nPress CTRL + C to stop.");               
+                Console.WriteLine("\nPress CTRL+C to stop.");               
                 ProcessFiles();
                 Waiting(10);
             }
@@ -54,7 +54,7 @@ namespace PontoNucleoVendas.Prompt
                 var outPath = $"{homeDir}\\data\\out";
 
                 // Criar o arquivo de saída
-                File.WriteAllText($"{outPath}\\" + file.Name.Replace(".dat", "_report.dat") , outFile.Out);                  
+                File.WriteAllText($"{outPath}\\" + file.Name.Replace(".dat", ".done.dat") , outFile.Out);                  
             }
 
             WriteInConsole(inFiles);
@@ -92,19 +92,22 @@ namespace PontoNucleoVendas.Prompt
 
                 var outFile = new OutFile(Guid.NewGuid(), inFile);
                 Console.WriteLine();
-                Console.WriteLine(outFile.Out);
-                Console.ResetColor();
+                Console.WriteLine(outFile.Out);                
             }
+
+            Console.ResetColor();
         }
 
         private static void Waiting(int seconds)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write($"Waiting {seconds} seconds.");
             for (int i = 0; i < seconds; i++)
             {
                 System.Threading.Thread.Sleep(1000);
                 Console.Write(".");                
-            }   
+            }
+            Console.ResetColor();  
         }
     }
 }
