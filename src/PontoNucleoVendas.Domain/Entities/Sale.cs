@@ -28,9 +28,6 @@ namespace PontoNucleoVendas.Domain.Entities
             _saleItems.Add(saleItem);
         }
 
-        public decimal Total()
-        {
-            return _saleItems.Sum(x => x.Price * x.Quantity);
-        }
+        public decimal Total => _saleItems.Sum(x => x.Price * x.Quantity);
     }
 }

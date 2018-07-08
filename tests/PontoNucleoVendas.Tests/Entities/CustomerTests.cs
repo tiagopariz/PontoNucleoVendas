@@ -2,7 +2,7 @@ using System;
 using PontoNucleoVendas.Domain.Entities;
 using Xunit;
 
-namespace PontoVendasNucleo.Tests.Entities
+namespace PontoNucleoVendas.Tests.Entities
 {
     public class CustomerTests
     {

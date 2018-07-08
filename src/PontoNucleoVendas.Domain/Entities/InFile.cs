@@ -7,11 +7,11 @@ namespace PontoNucleoVendas.Domain.Entities
 {
     public class InFile : Entity
     {
-        private IList<string> _lines;
-        private IList<Salesman> _sellers;
-        private IList<Customer> _customers;
-        private IList<Product> _products;
-        private IList<Sale> _sales;
+        private readonly IList<string> _lines;
+        private readonly IList<Salesman> _sellers;
+        private readonly IList<Customer> _customers;
+        private readonly IList<Product> _products;
+        private readonly IList<Sale> _sales;
 
         public InFile(Guid id,
                       string sourcePath,
@@ -26,7 +26,7 @@ namespace PontoNucleoVendas.Domain.Entities
             _products =  new List<Product>();
             _sales =  new List<Sale>();
 
-            foreach(var line in content.Split(new string[] { Environment.NewLine }, 
+            foreach(var line in content.Split(new[] { Environment.NewLine }, 
                                               StringSplitOptions.RemoveEmptyEntries))
             {
                 AddLine(line);
@@ -40,8 +40,6 @@ namespace PontoNucleoVendas.Domain.Entities
                         break;
                     case "003":
                         AddSales(line);
-                        break;
-                    default:
                         break;
                 }
             }            
@@ -67,18 +65,15 @@ namespace PontoNucleoVendas.Domain.Entities
         
         public void AddSellers(string line)
         {
-            var sellers = new List<Salesman>();
             var sellersInLIne = line.Replace(" 001", ";001").Split(';');
 
-            foreach (var salesmanItem in sellersInLIne)
-            {
-                var data = salesmanItem.Split('ç');
-                var salesman = new Salesman(Guid.NewGuid(),
-                                            data[1],
-                                            data[2],
-                                            Convert.ToDecimal(data[3], new CultureInfo("en-US")));
-                sellers.Add(salesman);
-            }
+            var sellers = sellersInLIne
+                                .Select(salesmanItem => salesmanItem.Split('ç'))
+                                .Select(data => new Salesman(Guid.NewGuid(), 
+                                                             data[1], 
+                                                             data[2], 
+                                                             Convert.ToDecimal(data[3], new CultureInfo("en-US"))))
+                                .ToList();
 
             AddSellers(sellers);
         }
@@ -141,10 +136,14 @@ namespace PontoNucleoVendas.Domain.Entities
             foreach (var saleInLine in salesInLine)
             {
                 var data = saleInLine.Split('ç');
-                var salesmanId = Sellers.FirstOrDefault(x => x.Name == data[3]).Id;
+                var salesmanId = Sellers?.FirstOrDefault(x => x.Name == data[3])?.Id;
+
+                if (salesmanId == null)
+                    return;
+
                 var sale = new Sale(Guid.NewGuid(),
                                     Convert.ToInt32(data[1], new CultureInfo("en-US")),
-                                    salesmanId);
+                                    (Guid)salesmanId);
 
                 var saleItemsCollection = data[2]
                                             .Replace("[", "")

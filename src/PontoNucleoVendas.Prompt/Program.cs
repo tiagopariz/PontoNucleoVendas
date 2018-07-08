@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using PontoNucleoVendas.Domain;
 using PontoNucleoVendas.Domain.Entities;
 
 namespace PontoNucleoVendas.Prompt
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             while (true)
             { 
                 Console.WriteLine("\nPress CTRL + C to stop.");               
                 ProcessFiles();
                 Waiting(10);
-            }            
+            }
         }
 
         public static void ProcessFiles()
@@ -41,7 +40,7 @@ namespace PontoNucleoVendas.Prompt
                 return;
             }
             // Lista os arquivos
-            foreach (FileInfo file in new DirectoryInfo(inPath).GetFiles("*.dat"))
+            foreach (var file in new DirectoryInfo(inPath).GetFiles("*.dat"))
             {
                 // Cria um novo objeto com o arquivo e conteúdo
                 var inFile = new InFile(Guid.NewGuid(),
@@ -84,7 +83,7 @@ namespace PontoNucleoVendas.Prompt
 
                 foreach (var sale in inFile.Sales)
                 {
-                    Console.WriteLine($"\nSale: {sale.Id}, {sale.SaleId}, {sale.SalesmanId}, {sale.Total()}");
+                    Console.WriteLine($"\nSale: {sale.Id}, {sale.SaleId}, {sale.SalesmanId}, {sale.Total}");
                     foreach (var saleItem in sale.SaleItems)
                     {
                         Console.WriteLine($"    Item: {saleItem.Id}, {saleItem.ProductId}, {saleItem.Quantity}, {saleItem.Price}");
