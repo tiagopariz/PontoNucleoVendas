@@ -17,63 +17,30 @@ namespace PontoNucleoVendas.Prompt
         {
             var inFiles = new List<InFile>();
 
-            // Lista arquivos
+            // Caminhos
             var homeDir = Environment.GetEnvironmentVariable("HOMEPATH");
             var inPath = $"{homeDir}\\data\\in";
+            var inPathRead = $"{inPath}\\read";
 
-            // Cria a pasta, caso não exista
+            // Cria as pastas, caso não existam
+            if (!Directory.Exists(inPath))
+                Directory.CreateDirectory(inPath);
+
+            if (!Directory.Exists(inPathRead))
+                Directory.CreateDirectory(inPathRead);
             
-            var dir = new DirectoryInfo($"{homeDir}\\data\\in");        
-
-            foreach (FileInfo file in dir.GetFiles())
+            // Lista os arquivos
+            foreach (FileInfo file in new DirectoryInfo(inPath).GetFiles())
             {
-                // Armazena caminho e conteudo        
-                
-                var inFileContent = File.ReadAllText(file.FullName);
-                var inFileLines = File.ReadAllLines(file.FullName);
+                // Cria um novo objeto com o arquivo e conteúdo
                 var inFile = new InFile(Guid.NewGuid(),
                                         file.FullName,
-                                        inFileContent);
-                inFiles.Add(inFile);                
+                                        File.ReadAllText(file.FullName));                              
 
-                foreach (var line in inFileLines)
-                {
-                    inFile.AddLine(line);
-                    switch (line.Substring(0, 3))
-                    {
-                        case "001":
-                            inFile.AddSellers(line);
-                            break;
-                        case "002":
-                            inFile.AddCustomers(line);
-                            break;
-                        case "003":
-                            inFile.AddSales(line);
-                            break;
-                        default:
-                            break;
-                    }
-                }      
-               
-                
-                // Lê o conteudo
+                inFiles.Add(inFile);
+                file.MoveTo($"{inPathRead}\\{file.Name}");
 
-                // Armazena o dat
-
-                // Separa as sessões 001, 002, 003
-
-                // Salva os clientes
-
-                // Salva os vendedores
-
-                // Salva os produtos
-
-                // Salva as vendas
-
-                // Cria a pasta read, caso não exista
-
-                // move o arquido para /read                
-
+                var outFile = new OutFile(Guid.NewGuid(), inFile);                
             }
 
             WriteInConsole(inFiles);
@@ -89,7 +56,7 @@ namespace PontoNucleoVendas.Prompt
             {                
                 Console.WriteLine($"Id: {inFile.Id}");
                 Console.WriteLine($"SourcePath: {inFile.SourcePath}");
-                Console.WriteLine($"Content:\n\n{inFile.Content}\n");
+                Console.WriteLine($"Content: {inFile.Content}\n");
 
                 foreach (var salesman in inFile.Sellers)
                 {
@@ -100,6 +67,19 @@ namespace PontoNucleoVendas.Prompt
                 {
                     Console.WriteLine($"Customer: {customer.Id}, {customer.Name}, {customer.BusinessArea}");
                 }
+
+                foreach (var sale in inFile.Sales)
+                {
+                    Console.WriteLine($"\nSale: {sale.Id}, {sale.SaleId}, {sale.SalesmanId}, {sale.Total()}");
+                    foreach (var saleItem in sale.SaleItems)
+                    {
+                        Console.WriteLine($"    Item: {saleItem.Id}, {saleItem.ProductId}, {saleItem.Quantity}, {saleItem.Price}");
+                    }
+                }
+
+                var outFile = new OutFile(Guid.NewGuid(), inFile);
+                Console.WriteLine();
+                Console.WriteLine(outFile.Out);
             }
         }
     }

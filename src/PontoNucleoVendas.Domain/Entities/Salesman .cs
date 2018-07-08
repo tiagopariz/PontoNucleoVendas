@@ -4,7 +4,7 @@ namespace PontoNucleoVendas.Domain.Entities
 {
     public class Salesman  : Entity
     {
-        public Salesman(Guid id, 
+        public Salesman(Guid id,
                         string cpf,
                         string name,
                         decimal salary) : 

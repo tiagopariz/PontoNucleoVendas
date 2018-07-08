@@ -9,20 +9,28 @@ namespace PontoNucleoVendas.Domain.Entities
         private IList<SaleItem> _saleItems;
 
         public Sale(Guid id,
-                    int salesmanId) : 
+                    int saleId,
+                    Guid salesmanId) : 
             base(id)
         {
+            SaleId = saleId;
             SalesmanId = salesmanId;            
             _saleItems = new List<SaleItem>();
         }
 
-        public int SalesmanId { get; }
+        public Guid SalesmanId { get; }
+        public int SaleId { get; }
 
         public IReadOnlyCollection<SaleItem> SaleItems => _saleItems.ToArray();
 
         public void AddSaleItem(SaleItem saleItem)
         {
             _saleItems.Add(saleItem);
+        }
+
+        public decimal Total()
+        {
+            return _saleItems.Sum(x => x.Price * x.Quantity);
         }
     }
 }

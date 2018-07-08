@@ -25,6 +25,26 @@ namespace PontoNucleoVendas.Domain.Entities
             _customers =  new List<Customer>();
             _products =  new List<Product>();
             _sales =  new List<Sale>();
+
+            foreach(var line in content.Split(new string[] { Environment.NewLine }, 
+                                              StringSplitOptions.RemoveEmptyEntries))
+            {
+                AddLine(line);
+                switch (line.Substring(0, 3))
+                {
+                    case "001":
+                        AddSellers(line);
+                        break;
+                    case "002":
+                        AddCustomers(line);
+                        break;
+                    case "003":
+                        AddSales(line);
+                        break;
+                    default:
+                        break;
+                }
+            }            
         }
 
         public string SourcePath { get; }
@@ -115,7 +135,36 @@ namespace PontoNucleoVendas.Domain.Entities
         
         public void AddSales(string line)
         {
-            
+            var sales = new List<Sale>();
+            var salesInLine = line.Replace(" 003", ";003").Split(';');
+
+            foreach (var saleInLine in salesInLine)
+            {
+                var data = saleInLine.Split('ç');
+                var salesmanId = Sellers.FirstOrDefault(x => x.Name == data[3]).Id;
+                var sale = new Sale(Guid.NewGuid(),
+                                    Convert.ToInt32(data[1], new CultureInfo("en-US")),
+                                    salesmanId);
+
+                var saleItemsCollection = data[2]
+                                            .Replace("[", "")
+                                            .Replace("]", "")
+                                            .Split(',');
+
+                foreach (var saleItemInLine in saleItemsCollection)
+                {
+                    var saleItemData = saleItemInLine.Split('-');
+                    var saleItem = new SaleItem(Guid.NewGuid(),
+                                                Convert.ToInt32(saleItemData[0], new CultureInfo("en-US")),
+                                                Convert.ToDecimal(saleItemData[1], new CultureInfo("en-US")),
+                                                Convert.ToDecimal(saleItemData[2], new CultureInfo("en-US")));
+                    sale.AddSaleItem(saleItem);
+                }
+
+                sales.Add(sale);
+            }
+
+            AddSales(sales);
         }
         
         public void AddSales(List<Sale> sales)
