@@ -5,11 +5,13 @@ namespace PontoNucleoVendas.Domain.Entities
 {
     public abstract class Entity : IEntity
     {
-        protected Entity(int id)
+        protected Entity(Guid id)
         {
-            Id = id;
+            Id = id == Guid.Empty 
+                    ? Guid.NewGuid() 
+                    : id;
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

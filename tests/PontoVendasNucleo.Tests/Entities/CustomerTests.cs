@@ -9,7 +9,7 @@ namespace PontoVendasNucleo.Tests.Entities
         [Fact]
         public void ShouldReturnCustomerWhenNewInstance()
         {
-            var sut = new Customer(1, "1234556665", "John", "Rural");
+            var sut = new Customer(Guid.NewGuid(), "1234556665", "John", "Rural");
             Assert.True(sut is Customer);
         }
     }

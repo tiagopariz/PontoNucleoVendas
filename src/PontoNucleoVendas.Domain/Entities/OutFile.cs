@@ -4,7 +4,7 @@ namespace PontoNucleoVendas.Domain.Entities
 {
     public class OutFile : Entity
     {
-        public OutFile(int id,
+        public OutFile(Guid id,
                        string content) : 
             base(id)
         {

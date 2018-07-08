@@ -1,8 +1,10 @@
+using System;
+
 namespace PontoNucleoVendas.Domain.Interfaces
 {
     public interface IEntity
     {
-        int Id { get; }
+        Guid Id { get; }
     }
     
 }

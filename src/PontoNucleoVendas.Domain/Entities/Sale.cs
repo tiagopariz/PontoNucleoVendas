@@ -6,23 +6,23 @@ namespace PontoNucleoVendas.Domain.Entities
 {
     public class Sale : Entity
     {
-        private IList<Item> _items;
+        private IList<SaleItem> _saleItems;
 
-        public Sale(int id,
+        public Sale(Guid id,
                     int salesmanId) : 
             base(id)
         {
             SalesmanId = salesmanId;            
-            _items = new List<Item>();
+            _saleItems = new List<SaleItem>();
         }
 
         public int SalesmanId { get; }
 
-        public IReadOnlyCollection<Item> Items => _items.ToArray();
+        public IReadOnlyCollection<SaleItem> SaleItems => _saleItems.ToArray();
 
-        public void AddItem(Item item)
+        public void AddSaleItem(SaleItem saleItem)
         {
-            _items.Add(item);
+            _saleItems.Add(saleItem);
         }
     }
 }

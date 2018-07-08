@@ -2,12 +2,12 @@ using System;
 
 namespace PontoNucleoVendas.Domain.Entities
 {
-    public class Item : Entity
+    public class SaleItem : Entity
     {
-        public Item(int id,
-                    int productId,
-                    decimal quantity,
-                    decimal price) : 
+        public SaleItem(Guid id,
+                        int productId,
+                        decimal quantity,
+                        decimal price) : 
             base(id)
         {
             ProductId = productId;
