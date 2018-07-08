@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{00D78317-840
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoNucleoVendas.Domain", "src\PontoNucleoVendas.Domain\PontoNucleoVendas.Domain.csproj", "{66E0B943-04F2-441D-8B5A-0C11C6035D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoVendasNucleo.Tests", "tests\PontoVendasNucleo.Tests\PontoVendasNucleo.Tests.csproj", "{068EC670-C8CC-4371-A889-EBB101FF4A37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoNucleoVendas.Tests", "tests\PontoNucleoVendas.Tests\PontoNucleoVendas.Tests.csproj", "{068EC670-C8CC-4371-A889-EBB101FF4A37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoNucleoVendas.Prompt", "src\PontoNucleoVendas.Prompt\PontoNucleoVendas.Prompt.csproj", "{FC2EB53F-9D16-44B2-8895-C421AE031A6F}"
 EndProject

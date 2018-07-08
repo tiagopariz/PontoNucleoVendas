@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/PontoVendasNucleo.Tests/PontoVendasNucleo.Tests.csproj"
+                "${workspaceFolder}\\src\\PontoNucleoVendas.Prompt\\PontoNucleoVendas.Prompt.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

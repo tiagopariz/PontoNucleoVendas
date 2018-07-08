@@ -53,9 +53,8 @@ namespace PontoNucleoVendas.Prompt
                         default:
                             break;
                     }
-                }            
-                
-                WriteInConsole(inFiles);
+                }      
+               
                 
                 // Lê o conteudo
 
@@ -77,16 +76,25 @@ namespace PontoNucleoVendas.Prompt
 
             }
 
+            WriteInConsole(inFiles);
+
             return new List<string>();
         }
 
         public static void WriteInConsole(List<InFile> inFiles)
         {
+            Console.WriteLine($"Files: {inFiles.Count}\n");
+
             foreach (var inFile in inFiles)
             {                
                 Console.WriteLine($"Id: {inFile.Id}");
                 Console.WriteLine($"SourcePath: {inFile.SourcePath}");
                 Console.WriteLine($"Content:\n\n{inFile.Content}\n");
+
+                foreach (var salesman in inFile.Sellers)
+                {
+                    Console.WriteLine($"Salesman: {salesman.Id}, {salesman.Name}, {salesman.Salary}");
+                }
             }
         }
     }

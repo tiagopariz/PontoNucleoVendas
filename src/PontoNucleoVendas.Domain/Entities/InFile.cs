@@ -47,7 +47,7 @@ namespace PontoNucleoVendas.Domain.Entities
         public void AddSellers(string line)
         {
             var sellers = new List<Salesman>();
-            var sellersInLIne = line.Split(' ');
+            var sellersInLIne = line.Replace(" 001", ";001").Split(';');
 
             foreach (var salesmanItem in sellersInLIne)
             {
@@ -79,9 +79,9 @@ namespace PontoNucleoVendas.Domain.Entities
         public void AddCustomers(string line)
         {
             var customers = new List<Customer>();
-            var customersInLIne = line.Split(' ');
+            var customersInLine = line.Replace(" 002", ";002").Split(';');
 
-            foreach (var customerItem in customersInLIne)
+            foreach (var customerItem in customersInLine)
             {
                 var data = customerItem.Split('ç');
                 var customer = new Customer(Guid.NewGuid(),
