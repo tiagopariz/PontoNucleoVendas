@@ -9,11 +9,16 @@ namespace PontoNucleoVendas.Prompt
     class Program
     {
         static void Main(string[] args)
-        {            
-            ListInFiles();
+        {
+            while (true)
+            { 
+                Console.WriteLine("\nPress CTRL + C to stop.");               
+                ProcessFiles();
+                Waiting(10);
+            }            
         }
 
-        public static List<string> ListInFiles()
+        public static void ProcessFiles()
         {
             var inFiles = new List<InFile>();
 
@@ -27,10 +32,16 @@ namespace PontoNucleoVendas.Prompt
                 Directory.CreateDirectory(inPath);
 
             if (!Directory.Exists(inPathRead))
-                Directory.CreateDirectory(inPathRead);
+                Directory.CreateDirectory(inPathRead);            
             
+            var files = new DirectoryInfo(inPath).GetFiles("*.dat");
+            if (files.Length < 1)
+            {
+                Console.WriteLine($"{inPath} is empty.");
+                return;
+            }
             // Lista os arquivos
-            foreach (FileInfo file in new DirectoryInfo(inPath).GetFiles())
+            foreach (FileInfo file in new DirectoryInfo(inPath).GetFiles("*.dat"))
             {
                 // Cria um novo objeto com o arquivo e conteúdo
                 var inFile = new InFile(Guid.NewGuid(),
@@ -40,16 +51,19 @@ namespace PontoNucleoVendas.Prompt
                 inFiles.Add(inFile);
                 file.MoveTo($"{inPathRead}\\{file.Name}");
 
-                var outFile = new OutFile(Guid.NewGuid(), inFile);                
+                var outFile = new OutFile(Guid.NewGuid(), inFile);
+                var outPath = $"{homeDir}\\data\\out";
+
+                // Criar o arquivo de saída
+                File.WriteAllText($"{outPath}\\" + file.Name.Replace(".dat", "_report.dat") , outFile.Out);                  
             }
 
             WriteInConsole(inFiles);
-
-            return new List<string>();
         }
 
         public static void WriteInConsole(List<InFile> inFiles)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Files: {inFiles.Count}\n");
 
             foreach (var inFile in inFiles)
@@ -80,7 +94,18 @@ namespace PontoNucleoVendas.Prompt
                 var outFile = new OutFile(Guid.NewGuid(), inFile);
                 Console.WriteLine();
                 Console.WriteLine(outFile.Out);
+                Console.ResetColor();
             }
+        }
+
+        private static void Waiting(int seconds)
+        {
+            Console.Write($"Waiting {seconds} seconds.");
+            for (int i = 0; i < seconds; i++)
+            {
+                System.Threading.Thread.Sleep(1000);
+                Console.Write(".");                
+            }   
         }
     }
 }
