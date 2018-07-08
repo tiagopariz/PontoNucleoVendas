@@ -95,6 +95,11 @@ namespace PontoNucleoVendas.Prompt
                 {
                     Console.WriteLine($"Salesman: {salesman.Id}, {salesman.Name}, {salesman.Salary}");
                 }
+
+                foreach (var customer in inFile.Customers)
+                {
+                    Console.WriteLine($"Customer: {customer.Id}, {customer.Name}, {customer.BusinessArea}");
+                }
             }
         }
     }

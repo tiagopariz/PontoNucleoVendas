@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace PontoNucleoVendas.Domain.Entities
@@ -55,7 +56,7 @@ namespace PontoNucleoVendas.Domain.Entities
                 var salesman = new Salesman(Guid.NewGuid(),
                                             data[1],
                                             data[2],
-                                            decimal.Parse(data[3]));
+                                            Convert.ToDecimal(data[3], new CultureInfo("en-US")));
                 sellers.Add(salesman);
             }
 
